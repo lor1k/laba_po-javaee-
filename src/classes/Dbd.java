@@ -115,7 +115,7 @@ public class Dbd {
         Wallet w = null;
         try{
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("SELECT * FROM wallets WHERE(id = "+ w_id +")");
+            ResultSet rs = statement.executeQuery("!SELECT * FROM wallets WHERE(id = "+ w_id +")");
             while(rs.next()){
                 w = new Wallet(rs.getInt("user_id"), rs.getString("currency"), rs.getDouble("balance"), rs.getInt("id"));
             }
