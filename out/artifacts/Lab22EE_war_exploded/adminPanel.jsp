@@ -41,6 +41,7 @@
 
     Integer wallet_id = null;
     Integer amount = null;
+    dbd.connect();
 
     try {
         wallet_id = Integer.parseInt(request.getParameter("wallet"));
@@ -50,7 +51,7 @@
     }
     System.out.println(wallet_id + " : " + amount);//
     if(wallet_id != null && amount != null){
-        System.out.println(dbd.addMoney(wallet_id, amount));
+        System.out.println("Result add code: " + dbd.addMoney(wallet_id, amount));
 
     } else {
         System.out.println("NUL BLYA!");

@@ -16,7 +16,7 @@ public class Dbd {
             System.out.println("Connected!");
         }
         catch (Exception e){
-            System.out.println("Exception:");
+            System.out.println("Exception: ");
             System.out.println(e.getMessage());
         }
     }
@@ -99,10 +99,11 @@ public class Dbd {
     }
     public User getUser(String login){
         User u = null;
+        Statement statement = null;
         try{
-            Statement statement = connection.createStatement();
+            statement = connection.createStatement();
             System.out.println("SELECT * FROM users WHERE(login = '"+ login + "')");
-            ResultSet rs = statement.executeQuery("SELECT * FROM users WHERE(login = "+ login + ")");
+            ResultSet rs = statement.executeQuery("SELECT * FROM users WHERE(login = '"+ login + "')");
             while(rs.next()){
                 u = new User(rs.getInt("id"), rs.getString("login"));
             }
@@ -113,14 +114,15 @@ public class Dbd {
     }
     public Wallet getWallet(int w_id){
         Wallet w = null;
+        System.out.println("Get wallet");
         try{
             Statement statement = connection.createStatement();
-            ResultSet rs = statement.executeQuery("!SELECT * FROM wallets WHERE(id = "+ w_id +")");
+            ResultSet rs = statement.executeQuery("SELECT * FROM wallets WHERE(id = "+ w_id +")");
             while(rs.next()){
                 w = new Wallet(rs.getInt("user_id"), rs.getString("currency"), rs.getDouble("balance"), rs.getInt("id"));
             }
         }catch (Exception e){
-            System.out.println(e.getMessage());
+            System.out.println("getWallet exception: " + e.getMessage());
         }
         return w;
     }
@@ -209,9 +211,11 @@ public class Dbd {
     }
     public int register(String login, String pass, String rep_pass){
         User temp_u = getUser(login);
-        System.out.println(temp_u.login);
+
         if(pass.equals(rep_pass)){
+            System.out.println("In passes same");
             if(temp_u == null){
+                System.out.println("User is null");
                 try{
                     Statement statement = connection.createStatement();
                     System.out.println("INSERT INTO users (login, password) VALUES ('" + login + "', '" + pass + "')");
@@ -249,9 +253,8 @@ public class Dbd {
 
 
     public int addMoney(Integer wallet_id, Integer amount) {
-        Wallet w = this.getWallet(wallet_id);
+        Wallet w = getWallet(wallet_id);
         if(amount > 0){
-            System.out.println("WALLET: " + w.toString());
             if(w != null){
                 w.balance+=amount;
                 try{
