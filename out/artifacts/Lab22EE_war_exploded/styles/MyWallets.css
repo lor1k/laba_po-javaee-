@@ -1,0 +1,86 @@
+.heading{
+    display: flex;
+    justify-content: center;
+}
+.filters{
+    width: 100%;
+    background-color: #c2c2c2;
+    height: 20vh;
+}
+.filters>form{
+    display: flex;
+    margin: auto;
+    padding: 10px;
+}
+form{
+    width: auto;
+    vertical-align: center;
+    margin: auto;
+    padding: auto;
+}
+form>input{
+    margin-top: 15px;
+    height: 20px;
+}
+form>p{
+    margin: 10px;
+}
+form>label{
+    margin: 10px;
+}
+.radios>span{
+    display: block;
+}
+form>input:last-child{
+    width: 90px;
+}
+.filters > p{
+    font-size: 30px;
+    font-weight: 600;
+}
+.error_p{
+    color: red;
+}
+.success_p{
+    color: green;
+}
+aside{
+    position: fixed;
+    right: 20px;
+    bottom: 20px;
+}
+aside input[type="submit"], button{
+    height: 40px;
+    width: 140px;
+    margin: 10px;
+    border-radius: 8px;
+}
+.hidden{
+    display: none;
+}
+.create{
+    background-color: #24ff32;
+    border: solid 2px #1ec929;
+}
+.delete{
+    background-color: #ff2626;
+    border: solid 2px #c91e1e;
+}
+.create:hover{
+    background-color: #54ff5f;
+    border: solid 2px #52c45a;
+    cursor: pointer;
+}
+.delete:hover{
+    background-color: #ff5c5c;
+    border: solid 2px #c44747;
+    cursor: pointer;
+}
+.input{
+    height: 40px;
+    width: 140px;
+    margin: 10px;
+    border-radius: 8px;
+    text-align: center;
+    font-size: 30px;
+}
