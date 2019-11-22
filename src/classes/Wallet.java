@@ -1,9 +1,17 @@
 package classes;
 
+import org.intellij.lang.annotations.Pattern;
+import org.jetbrains.annotations.NotNull;
+
+//import javax.validation.constraints.NotNull
 public class Wallet {
+
     private int user_id;
+    @Pattern("[A-Z]{3}")
     public String currency;
+    @MoreThanZero//my own annotation classes.MoreThanZero.class
     public double balance;
+    @NotNull
     public int id;
 
     Wallet(int user_id, String currency, double balance, int id) {
