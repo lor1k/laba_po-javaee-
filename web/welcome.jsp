@@ -16,51 +16,14 @@
 </head>
 <body>
 <%
-    Dbd dbd = new Dbd();
-    User current_user = null;
-    HttpSession s = request.getSession();
-    boolean logined = false;
-    current_user = (User)s.getAttribute("current_user");
-    if(current_user != null) {
-        response.sendRedirect("/Lab22EE_war_exploded/main");
-    }
-    dbd.connect();
-    String login = request.getParameter("login");
-    String password = request.getParameter("password");
-    String reg_log = request.getParameter("reg_log");
-    String reg_pass = request.getParameter("reg_pass");
-    String rep_password = request.getParameter("rep_password");
-    if(login!=null && password!=null && !password.equals("") && !login.equals("")){
-        current_user = dbd.login(login, password);
-        if(current_user != null){
-            if(password.equals(current_user.getPassword())){
-                s.setAttribute("current_user", current_user);
-                logined = true;
-            }
-        }
-    }
-    System.out.println("rl: " + reg_log + " rp: " + reg_pass + " rp: " + rep_password);
-    if(reg_log!=null && reg_pass!=null && rep_password != null && !reg_log.equals("") && !reg_pass.equals("") && !rep_password.equals("")){
-        int reg_code = dbd.register(reg_log, reg_pass, rep_password);
-        System.out.println("Reg_code: " + reg_code);
-        if(reg_code == 1){
-            current_user = dbd.getUser(login);
-            s.setAttribute("current_user", current_user);
-            response.sendRedirect("/Lab22EE_war_exploded/main");
-        }
+Integer reg_code = (Integer)session.getAttribute("reg_code");
+
         if(reg_code == -1){//pass not match
             out.print("<p>Passwords doesn't match</p>");
         }
         if(reg_code == -2){
             out.print("<p>Login is occupied</p>");
         }
-    }
-    if(logined){
-
-        response.sendRedirect("/Lab22EE_war_exploded/main");
-    }else{
-        //response.sendRedirect("/Lab22EE_war_exploded/welcome");
-    }
 
 %>
 <jsp:include page="header.jsp"/>

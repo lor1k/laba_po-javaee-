@@ -22,7 +22,7 @@
     <a href="${pageContext.request.contextPath}/welcome">[back]</a>
 </div>
 <div class="filters">
-    <form action="">
+    <form action="SendServlet">
         <label for="amount">Amount: </label>
         <input type="number" name="amount" id="amount" placeholder="AMOUNT" required>
         <p> from </p>
@@ -47,31 +47,10 @@
         <input type="submit" value="Send">
     </form>
     <%
-        Integer from = null;
-        Integer to = null;
-        Double amount = null;
-        int res_code = 0;
-        try {
-            from = Integer.parseInt(request.getParameter("wallet"));
-        } catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        try {
-            to = Integer.parseInt(request.getParameter("to"));
-        } catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        try {
-            amount = Double.parseDouble(request.getParameter("amount"));
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        if(from != null && to != null && amount != null){
-            res_code = dbd.send(from, to, amount);
-        }
+        Integer res_code = (Integer)session.getAttribute("send_code");
         if(res_code != 0){
             if(res_code == -3){
-                out.print("<p class = 'error_p'>Wallet is not empty</p>");
+                out.print("<p class = 'error_p'>Currency exchange is not available now</p>");
             }
             if(res_code == -2){
                 out.print("<p class = 'error_p'>Not enough balance</p>");

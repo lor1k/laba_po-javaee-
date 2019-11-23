@@ -1,8 +1,7 @@
 <%@ page import="classes.Dbd" %>
 <%@ page import="classes.User" %>
-<%@ page import="java.util.ArrayList" %>
 <%@ page import="classes.Wallet" %>
-<%@ page import="java.io.PrintWriter" %>
+<%@ page import="java.util.ArrayList" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 <html>
 <head>
@@ -16,7 +15,7 @@
     <h1>Your wallets</h1><a href="${pageContext.request.contextPath}/welcome">[back]</a>
 </div>
 <div class="filters">
-    <form action="">
+    <form action="MyWalletServlet">
         <input type="number" name="id" id="id" placeholder="ID"><label for="id"></label>
         <p> with balance (0 to disable)</p>
         <div class="radios">
@@ -31,73 +30,9 @@
 </div>
 <div class="wallets">
 <%
-    User current_user = (User)session.getAttribute("current_user");
-    if(current_user == null){
-        response.sendRedirect("/Lab22EE_war_exploded/welcome");
-    }
-    boolean valid;
-    Dbd dbd = new Dbd();
-    dbd.connect();
-    ArrayList<Wallet> wallets = dbd.getWallets(current_user.user_id);
-    String s;
-    Integer id = null;
-    Double balance = null;
-    String currency = null;
-
-    try{
-        id = Integer.parseInt(request.getParameter("id"));
-    }catch (Exception e){
-        System.out.println(e.getMessage());
-    }
-    try{
-        currency = request.getParameter("currency").toUpperCase();
-    } catch (Exception e){
-        System.out.println(e.getMessage());
-    }
-
-    String more = request.getParameter("more");
-    try{
-        balance = Double.parseDouble(request.getParameter("bal"));
-    } catch (Exception e){
-        System.out.println(e.getMessage());
-    }
-
-    System.out.println("currency = " + currency);
-    for (Wallet w :
-            wallets) {
-    valid = true;
-    s = "";
-        if(id != null) {
-            if (id != w.id) {
-                valid = false;
-
-            }
-        }
-        if(currency != null && !currency.equals("")){
-            if(!currency.equals(w.currency)){
-                valid = false;
-                System.out.println(w.toString());
-            }
-        }
-        if(more != null){
-            if(balance != null && balance != 0){
-                if(more.equals("1")){//less
-                    if(!(balance>w.balance)){
-                        valid = false;
-                    }
-                }
-                if(more.equals("2")){//more
-                    if(!(balance<w.balance)){
-                        valid = false;
-                    }
-                }
-            }
-
-        }
-        if(valid){
-            s = w.id + " " + w.balance + " " + w.currency;
-           out.println("<p>" + s + "</p>");
-        }
+    ArrayList<String> vW = (ArrayList<String>)session.getAttribute("validWallets");//Корме как ArrayList<String> нут ничего быть не может
+    for (String s: vW){
+        out.println("<p>" + s + "</p>");
     }
 
 
@@ -112,24 +47,8 @@
         <button class="create" id="create_but">Create new wallet</button>
     </div>
     <%
-        Integer wallet_id = null;
-        String currency_id = null;
-        int del_res = 0;
-        int cre_res = 0;
-        try{
-            wallet_id = Integer.parseInt(request.getParameter("delete_id"));
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        try{
-            currency_id = request.getParameter("currency_id").toUpperCase();
-        } catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-
-        if(wallet_id != null){
-            del_res = dbd.deleteWallet(current_user, wallet_id);
-        }
+        Integer del_res = (Integer)session.getAttribute("del_res");
+        Integer cre_res = (Integer)session.getAttribute("cre_res");
         if(del_res != 0){
             if(del_res == -3){
                 out.print("<p class = 'error_p'>Wallet is not empty</p>");
@@ -144,10 +63,6 @@
                 out.print("<p class = 'success_p'>Deleted!</p>");
             }
         }
-        System.out.println("c_id = " + currency_id);
-        if(currency_id != null && !currency_id.equals("")){
-            cre_res = dbd.createWallet(current_user, currency_id);
-        }
         if(cre_res != 0){
             if(cre_res == -1){
                 out.print("<p class = 'error_p'>Undefined currency</p>");
@@ -158,13 +73,13 @@
         }
     %>
     <div class="delete_bar hidden">
-        <form action="">
+        <form action="MyWalletServlet">
             <input type="number" id="delete_id" name="delete_id" class="input" placeholder="id">
             <input type="submit" class="delete" value="Delete">
         </form>
     </div>
     <div class="create_bar hidden">
-        <form action="">
+        <form action="MyWalletServlet">
             <input type="text" id="currency_id" name="currency_id" class="input" placeholder="currency">
             <input type="submit" class="create" value="Create">
         </form>
@@ -195,6 +110,3 @@
 
 </body>
 </html>
-<%
-    dbd.close();
-%>

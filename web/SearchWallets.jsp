@@ -22,7 +22,7 @@
     <a href="${pageContext.request.contextPath}/welcome">[back]</a>
 </div>
 <div class="filters">
-    <form action="">
+    <form action="SearchWalletsServlet">
         <input type="number" name="id" id="id" placeholder="ID"><label for="id"></label>
         <p> with balance (0 to disable)</p>
         <div class="radios">
@@ -36,83 +36,12 @@
     </form>
 </div>
 <div class="wallets">
-        <%
-    User current_user = (User)session.getAttribute("current_user");
-    if(current_user == null){
-        response.sendRedirect("/Lab22EE_war_exploded/welcome");
+<%
+   ArrayList<String> vW = (ArrayList)session.getAttribute("allValidWallets");//NE NUJNO WARNINGOV!
+    for (String w: vW){
+        out.println(w);
     }
-    boolean valid;
-    Dbd dbd = new Dbd();
-    dbd.connect();
-    ArrayList<Wallet> wallets = dbd.getWallets(0);
-    String s;
-    Integer id = null;
-    Double balance = null;
-    String currency = null;
-
-    try{
-        id = Integer.parseInt(request.getParameter("id"));
-    }catch (Exception e){
-        System.out.println(e.getMessage());
-    }
-    try{
-        currency = request.getParameter("currency").toUpperCase();
-    } catch (Exception e){
-        System.out.println(e.getMessage());
-    }
-
-    String more = request.getParameter("more");
-    try{
-        balance = Double.parseDouble(request.getParameter("bal"));
-    } catch (Exception e){
-        System.out.println(e.getMessage());
-    }
-
-    for (Wallet w :
-            wallets) {
-    valid = true;
-    s = "";
-        if(id != null) {
-            if (id != w.id) {
-                valid = false;
-            }
-        }
-        if(currency != null && !currency.equals("")){
-            if(!currency.equals(w.currency)){
-                valid = false;
-                System.out.println(w.toString());
-            }
-        }
-        if(more != null){
-            if(balance != null && balance != 0){
-                if(more.equals("1")){//less
-                    if(!(balance>w.balance)){
-                        valid = false;
-                    }
-                }
-                if(more.equals("2")){//more
-                    if(!(balance<w.balance)){
-                        valid = false;
-                    }
-                }
-            }
-
-        }
-        if(valid){
-            System.out.println("w = "+ w.toString());
-            System.out.println(dbd.getUser(w.getUser_id()).toString());
-            s = w.id + " " + w.currency + " Owner: "
-            + dbd.getUser(w.getUser_id()).toString()
-            + "(id:" + w.getUser_id() + ")";
-           out.println("<p>" + s + "</p>");
-        }
-    }
-
-
 
 %>
 </body>
 </html>
-<%
-    dbd.close();
-%>

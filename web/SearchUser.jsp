@@ -21,7 +21,7 @@
     <a href="${pageContext.request.contextPath}/welcome">[back]</a>
 </div>
 <div class="filters">
-    <form action="">
+    <form action="SearchUserServlet">
         <label for="id">Id:</label>
         <input type="number" name="id" id="id">
         <label for="name">Name:</label>
@@ -32,48 +32,9 @@
 <div class="users">
 
     <%
-        User current_user = (User)session.getAttribute("current_user");
-        if(current_user == null){
-            response.sendRedirect("/Lab22EE_war_exploded/welcome");
-        }
-        boolean valid;
-        Dbd dbd = new Dbd();
-        dbd.connect();
-        ArrayList<User> users = dbd.getUsers();
-
-        Integer id = null;
-        String name = null;
-        try{
-            id = Integer.parseInt(request.getParameter("id"));
-        }catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-        try{
-            name = request.getParameter("name").toUpperCase();
-        } catch (Exception e){
-            System.out.println(e.getMessage());
-        }
-
-
-        for (User u :
-                users) {
-            if(u.user_id == current_user.user_id){
-                continue;
-            }
-            valid = true;
-            if(id != null){
-                if(id != u.user_id){
-                    valid = false;
-                }
-            }
-            if(name != null){
-                if(!name.equals(u.toString().toUpperCase())){
-                    valid = false;
-                }
-            }
-            if(valid){
-                out.write("<p>" + u.user_id + " " + u.toString() + "</p>");
-            }
+        ArrayList<String> vU = (ArrayList)session.getAttribute("validUsers");//Here is only ArrayList possible
+        for(String u: vU){
+            out.println("<p>" + u + "</p>");
         }
 
 
@@ -82,6 +43,3 @@
 </div>
 </body>
 </html>
-<%
-    dbd.close();
-%>
