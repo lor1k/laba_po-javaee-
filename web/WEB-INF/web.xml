@@ -21,6 +21,22 @@
         <url-pattern>/welcome</url-pattern>
     </servlet-mapping>
     <servlet>
+        <servlet-name>welcome2</servlet-name>
+        <jsp-file>/welcome2.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>welcome2</servlet-name>
+        <url-pattern>/welcome2</url-pattern>
+    </servlet-mapping>
+    <servlet>
+        <servlet-name>http</servlet-name>
+        <jsp-file>/http_page.jsp</jsp-file>
+    </servlet>
+    <servlet-mapping>
+        <servlet-name>http</servlet-name>
+        <url-pattern>/http</url-pattern>
+    </servlet-mapping>
+    <servlet>
         <servlet-name>main</servlet-name>
         <jsp-file>/main.jsp</jsp-file>
     </servlet>

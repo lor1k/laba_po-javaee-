@@ -1,0 +1,12 @@
+<component name="libraryTable">
+  <library name="hibernate-jpa-2.1-api-1.0.0.draft-14-sources">
+    <CLASSES />
+    <JAVADOC />
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/hibernate-jpa-2.1-api-1.0.0.draft-14-sources.jar!/" />
+    </SOURCES>
+    <excluded>
+      <root url="jar://$PROJECT_DIR$/lib/hibernate-jpa-2.1-api-1.0.0.draft-14-sources.jar!/javax/persistence" />
+    </excluded>
+  </library>
+</component>

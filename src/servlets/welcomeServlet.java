@@ -52,13 +52,10 @@ public class welcomeServlet extends HttpServlet {
             }
         }
 
-
         if(logined){
-
             response.sendRedirect("/Lab22EE_war_exploded/main");
         }else{
             //response.sendRedirect("/Lab22EE_war_exploded/welcome");
         }
-
     }
 }

@@ -11,7 +11,7 @@ public class Dbd {
         try{
             Class.forName("org.sqlite.JDBC");
             connection = DriverManager.getConnection(
-                    "jdbc:sqlite:J:\\проекты\\Lab22EE\\db\\bank.db"
+                    "jdbc:sqlite:J:\\projects\\Lab22EE\\db\\bank.db"
             );
             System.out.println("Connected!");
         }
@@ -251,7 +251,6 @@ public class Dbd {
         }
     }
 
-
     public int addMoney(Integer wallet_id, Integer amount) {
         Wallet w = getWallet(wallet_id);
         if(amount > 0){
@@ -259,7 +258,7 @@ public class Dbd {
                 w.balance+=amount;
                 try{
                     Statement statement = connection.createStatement();
-                    statement.execute("UPDATE wallets SET balance = " + w.balance + " WHERE (id = " + wallet_id + ")");
+                    statement.execute("UPDATE wallets   SET balance = " + w.balance + " WHERE (id = " + wallet_id + ")");
                     return 1;//success
                 } catch (Exception e){
                     System.out.print(e.getMessage());

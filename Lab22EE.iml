@@ -30,5 +30,8 @@
         <SOURCES />
       </library>
     </orderEntry>
+    <orderEntry type="library" name="hibernate-jpa-2.1-api-1.0.0.draft-14-sources" level="project" />
+    <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
+    <orderEntry type="library" name="sqlite-jdbc-3.27.2.1 (2)" level="project" />
   </component>
 </module>

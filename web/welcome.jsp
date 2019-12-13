@@ -16,21 +16,22 @@
 </head>
 <body>
 <%
+    System.out.println("TIS IS MY PROJECT!!!!");
 Integer reg_code = (Integer)session.getAttribute("reg_code");
 
-        if(reg_code == -1){//pass not match
-            out.print("<p>Passwords doesn't match</p>");
-        }
-        if(reg_code == -2){
-            out.print("<p>Login is occupied</p>");
-        }
+//        if(reg_code == -1){//pass not match
+//            out.print("<p>Passwords doesn't match</p>");
+//        }
+//        if(reg_code == -2){
+//            out.print("<p>Login is occupied</p>");
+//        }
 
 %>
 <jsp:include page="header.jsp"/>
 <div class="wrapper">
     <div class="form" id="login_form">
         <p>Login</p>
-        <form action="">
+        <form action="welcomeServlet">
             <input type="text" placeholder="Login" name="login">
             <input type="password" placeholder="Password" name="password">
             <span id="to_reg">I don't have an account</span>
@@ -39,7 +40,7 @@ Integer reg_code = (Integer)session.getAttribute("reg_code");
     </div>
     <div class="form hidden" id="registration_form">
         <p>Registration</p>
-        <form action="">
+        <form action="welcomeServlet">
             <input type="text" placeholder="Login" name="reg_log">
             <input type="password" placeholder="Password" name="reg_pass" >
             <input type="password" placeholder="Repeat password" name="rep_password">
@@ -66,6 +67,57 @@ Integer reg_code = (Integer)session.getAttribute("reg_code");
 </script>
 </body>
 </html>
-<%
-    dbd.close();
-%>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
